@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "https://github.com/victor-magaldi/ig-nodejs-01.git",
   "author": "victor-magaldi-acct <victmagaldi@hotmail.com>",
+  "scripts": {
+    "dev": "node src/server.js"
+  },
   "license": "MIT"
 }
