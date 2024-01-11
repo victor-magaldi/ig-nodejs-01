@@ -1,51 +1,5 @@
-import http from "node:http";
+import express from "express";
 
-// - Criar usuários
-// - Listagem usuários
-// - Edição de usuários
-// - Remoção de usuários
+const app = express();
 
-// - HTTP
-//   - Método HTTP
-//   - URL
-
-// GET, POST, PUT, PATCH, DELETE
-
-// GET => Buscar um recurso do back-end
-// POST => Criar um recurso no back-end
-// PUT => Atualizar um recurso no back-end
-// PATCH => Atualizar uma informação específica de um recurso no back-end
-// DELETE => Deletar um recurso do back-end
-
-// GET /users => Buscando usuários no banc-end
-// POST /users => Criar um usuário no back-end
-
-// Stateful - Stateless
-
-// Cabeçalhos (Requisição/resposta) => Metadados
-
-const users = [];
-
-const server = http.createServer((req, res) => {
-  const { method, url } = req;
-
-  if (method === "GET" && url === "/users") {
-    return res
-      .setHeader("Content-type", "application/json")
-      .end(JSON.stringify(users));
-  }
-
-  if (method === "POST" && url === "/users") {
-    users.push({
-      id: 1,
-      name: "John Doe",
-      email: "johndoe@example.com",
-    });
-
-    return res.end("create user");
-  }
-
-  return res.end("Hello");
-});
-
-server.listen(400);
+app.listen(9000);

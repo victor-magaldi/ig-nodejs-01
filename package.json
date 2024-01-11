@@ -6,7 +6,13 @@
   "repository": "https://github.com/victor-magaldi/ig-nodejs-01.git",
   "author": "victor-magaldi-acct <victmagaldi@hotmail.com>",
   "scripts": {
-    "dev": "node src/server.js"
+    "dev": "nodemon src/server.js"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
 }
