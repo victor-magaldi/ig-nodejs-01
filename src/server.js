@@ -75,6 +75,7 @@ app.put("/account", verifyIfExistsAccountByCpf, (req, res) => {
   customer.name = name;
   return res.status(201).send();
 });
+
 app.get("/account", verifyIfExistsAccountByCpf, (req, res) => {
   const { customer } = req;
 
@@ -89,4 +90,11 @@ app.delete("/account", verifyIfExistsAccountByCpf, (req, res) => {
   return res.status(200).json({ message: `${customer.cpf} deleted user` });
 });
 
+app.get("/balance", verifyIfExistsAccountByCpf, (req, res) => {
+  const { customer } = req;
+
+  const balance = getBalance(customer.statements);
+
+  return res.status(200).json({ balance });
+});
 app.listen(9000);
