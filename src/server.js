@@ -9,15 +9,20 @@ const customers = [];
 
 app.post("/account", (req, res) => {
   const { cpf, name } = req.body;
-  const id = uuidV4();
+
+  const customerExists = customers.some((customer) => customer.cpf === cpf);
+
+  if (customerExists) {
+    return res.status(400).json({ error: "Customer Already exists!" });
+  }
 
   customers.push({
     cpf,
     name,
-    id,
+    id: uuidV4(),
     statement: [],
   });
-
+  console.log("customers", customers);
   return res.status(201).send();
 });
 
