@@ -20,7 +20,7 @@ app.post("/account", (req, res) => {
     cpf,
     name,
     id: uuidV4(),
-    statement: [123],
+    statement: [],
   });
   return res.status(201).send();
 });
@@ -29,6 +29,24 @@ app.get("/statement", verifyIfExistsAccountByCpf, (req, res) => {
   const { customer } = req;
   return res.json(customer.statement);
 });
+
+app.post("/deposit", verifyIfExistsAccountByCpf, (req, res) => {
+  const { description, amount } = req.body;
+
+  const { customer } = req;
+
+  const statementOperation = {
+    description,
+    amount,
+    created_at: new Date(),
+    type: "credit",
+  };
+
+  customer.statement.push(statementOperation);
+
+  return res.status(201).send();
+});
+app.listen(9000);
 
 function verifyIfExistsAccountByCpf(req, res, next) {
   const { cpf } = req.headers;
@@ -42,4 +60,3 @@ function verifyIfExistsAccountByCpf(req, res, next) {
 
   return next();
 }
-app.listen(9000);
