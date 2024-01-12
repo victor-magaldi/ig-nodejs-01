@@ -80,4 +80,13 @@ app.get("/account", verifyIfExistsAccountByCpf, (req, res) => {
 
   return res.status(201).json(customer);
 });
+
+app.delete("/account", verifyIfExistsAccountByCpf, (req, res) => {
+  const { customer } = req;
+
+  customers.splice(customer, 1);
+
+  return res.status(200).json({ message: `${customer.cpf} deleted user` });
+});
+
 app.listen(9000);
