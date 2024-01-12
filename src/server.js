@@ -20,10 +20,21 @@ app.post("/account", (req, res) => {
     cpf,
     name,
     id: uuidV4(),
-    statement: [],
+    statement: [123],
   });
-  console.log("customers", customers);
   return res.status(201).send();
+});
+
+app.get("/statement", (req, res) => {
+  const { cpf } = req.headers;
+  console.log(cpf);
+  const customer = customers.find((customer) => customer.cpf === cpf);
+
+  if (!customer) {
+    return res.status(400).json({ error: "User not found" });
+  }
+
+  return res.json(customer.statement);
 });
 
 app.listen(9000);
