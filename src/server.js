@@ -75,4 +75,9 @@ app.put("/account", verifyIfExistsAccountByCpf, (req, res) => {
   customer.name = name;
   return res.status(201).send();
 });
+app.get("/account", verifyIfExistsAccountByCpf, (req, res) => {
+  const { customer } = req;
+
+  return res.status(201).json(customer);
+});
 app.listen(9000);
