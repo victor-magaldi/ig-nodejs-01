@@ -1,8 +1,10 @@
 import express, { response } from "express";
 import { v4 as uuidV4 } from "uuid";
+// v4 numeros randomicos
+
 import { verifyIfExistsAccountByCpf } from "./middleware/verifyIfExistsAccountByCpf.js";
 import { customers } from "./customers.js";
-// v4 numeros randomicos
+import { getBalance } from "./utils/index.js";
 
 const app = express();
 app.use(express.json());
@@ -20,14 +22,14 @@ app.post("/account", (req, res) => {
     cpf,
     name,
     id: uuidV4(),
-    statement: [],
+    statements: [],
   });
   return res.status(201).send();
 });
 
-app.get("/statement", verifyIfExistsAccountByCpf, (req, res) => {
+app.get("/statements", verifyIfExistsAccountByCpf, (req, res) => {
   const { customer } = req;
-  return res.json(customer.statement);
+  return res.json(customer.statements);
 });
 
 app.post("/deposit", verifyIfExistsAccountByCpf, (req, res) => {
@@ -35,19 +37,35 @@ app.post("/deposit", verifyIfExistsAccountByCpf, (req, res) => {
 
   const { customer } = req;
 
-  const statementOperation = {
+  const statementsOperation = {
     description,
     amount,
     created_at: new Date(),
     type: "credit",
   };
 
-  customer.statement.push(statementOperation);
+  customer.statements.push(statementsOperation);
 
   return res.status(201).send();
 });
-app.post("withdraw", verifyIfExistsAccountByCpf, (req, res) => {
+app.post("/withdraw", verifyIfExistsAccountByCpf, (req, res) => {
+  const { amount, description } = req.body;
   const { customer } = req;
+
+  const balance = getBalance(customer.statements);
+
+  if (balance < amount)
+    return res.status(400).json({ error: "insufficient funds" });
+
+  const statementsOperation = {
+    description,
+    amount,
+    created_at: new Date(),
+    type: "debit",
+  };
+  customer.statements.push(statementsOperation);
+
+  return res.status(201).send();
 });
 
 app.listen(9000);
