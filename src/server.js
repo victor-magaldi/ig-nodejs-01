@@ -25,16 +25,21 @@ app.post("/account", (req, res) => {
   return res.status(201).send();
 });
 
-app.get("/statement", (req, res) => {
+app.get("/statement", verifyIfExistsAccountByCpf, (req, res) => {
+  console.log("req.customer", req.customer);
+  return res.json(customer.statement);
+});
+
+function verifyIfExistsAccountByCpf(req, res, next) {
   const { cpf } = req.headers;
-  console.log(cpf);
   const customer = customers.find((customer) => customer.cpf === cpf);
 
   if (!customer) {
     return res.status(400).json({ error: "User not found" });
   }
 
-  return res.json(customer.statement);
-});
+  req.customer = customer;
 
+  return next();
+}
 app.listen(9000);
