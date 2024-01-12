@@ -26,14 +26,14 @@ app.post("/account", (req, res) => {
 });
 
 app.get("/statement", verifyIfExistsAccountByCpf, (req, res) => {
-  console.log("req.customer", req.customer);
+  const { customer } = req;
   return res.json(customer.statement);
 });
 
 function verifyIfExistsAccountByCpf(req, res, next) {
   const { cpf } = req.headers;
-  const customer = customers.find((customer) => customer.cpf === cpf);
 
+  const customer = customers.find((customer) => customer.cpf === cpf);
   if (!customer) {
     return res.status(400).json({ error: "User not found" });
   }
