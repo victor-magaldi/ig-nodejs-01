@@ -1,11 +1,11 @@
 import express, { response } from "express";
 import { v4 as uuidV4 } from "uuid";
+import { verifyIfExistsAccountByCpf } from "./middleware/verifyIfExistsAccountByCpf.js";
+import { customers } from "./customers.js";
 // v4 numeros randomicos
 
 const app = express();
 app.use(express.json());
-
-const customers = [];
 
 app.post("/account", (req, res) => {
   const { cpf, name } = req.body;
@@ -46,17 +46,8 @@ app.post("/deposit", verifyIfExistsAccountByCpf, (req, res) => {
 
   return res.status(201).send();
 });
+app.post("withdraw", verifyIfExistsAccountByCpf, (req, res) => {
+  const { customer } = req;
+});
+
 app.listen(9000);
-
-function verifyIfExistsAccountByCpf(req, res, next) {
-  const { cpf } = req.headers;
-
-  const customer = customers.find((customer) => customer.cpf === cpf);
-  if (!customer) {
-    return res.status(400).json({ error: "User not found" });
-  }
-
-  req.customer = customer;
-
-  return next();
-}
