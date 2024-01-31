@@ -13,13 +13,14 @@ describe("Testes de API", () => {
     expect(response.status).to.equal(201);
   });
 
-  it("Deve obter o saldo da conta", async () => {
-    const response = await request
-      .get("/balance")
-      .query({ cpf: "12345678901" });
+  it("search account", async () => {
+    const response = await request.get("/account").set("cpf", "12345678901");
 
     expect(response.status).to.equal(200);
-    expect(response.body).to.have.property("balance");
+    expect(response.body).to.have.property("cpf");
+    expect(response.body).to.have.property("name");
+    expect(response.body).to.have.property("id");
+    expect(response.body).to.have.property("statements");
   });
 
   // Adicione mais testes conforme necessário

@@ -79,7 +79,7 @@ app.put("/account", verifyIfExistsAccountByCpf, (req, res) => {
 app.get("/account", verifyIfExistsAccountByCpf, (req, res) => {
   const { customer } = req;
 
-  return res.status(201).json(customer);
+  return res.status(200).json(customer);
 });
 
 app.delete("/account", verifyIfExistsAccountByCpf, (req, res) => {
