@@ -4,7 +4,7 @@ import app from "../src/server.js";
 
 const request = supertest(app);
 
-describe("Testes de API", () => {
+describe("test create and search account", () => {
   it("Create account - POST /account", async () => {
     const response = await request
       .post("/account")
