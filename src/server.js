@@ -98,3 +98,5 @@ app.get("/balance", verifyIfExistsAccountByCpf, (req, res) => {
   return res.status(200).json({ balance });
 });
 app.listen(9000);
+
+export default app;

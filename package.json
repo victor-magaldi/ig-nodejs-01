@@ -2,11 +2,11 @@
   "name": "ig-nodejs-01",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
   "repository": "https://github.com/victor-magaldi/ig-nodejs-01.git",
   "author": "victor-magaldi-acct <victmagaldi@hotmail.com>",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "test": "mocha"
   },
   "license": "MIT",
   "dependencies": {
